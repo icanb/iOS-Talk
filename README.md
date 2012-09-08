@@ -1,1 +1,1 @@
-Please download the `simple_bookstore` folder and open it with a text editor.
+This repo contains the keynote file and sample code for Intro to iOS talk.
