@@ -1,0 +1,1 @@
+Please download the `simple_bookstore` folder and open it with a text editor.

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+	<!-- Basic Page Needs
+  ================================================== -->
+	<meta charset="utf-8">
+	<title>Better JavaScript</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- Mobile Specific Metas
+  ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+  ================================================== -->
+	<link rel="stylesheet" href="stylesheets/base.css">
+	<link rel="stylesheet" href="stylesheets/skeleton.css">
+	<link rel="stylesheet" href="stylesheets/layout.css">
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+</head>
+<body>
+	<div class="container">
+		<div class="header">
+			<h1>Bookstore</h1>
+			<hr />
+		</div>
+		<div class="one-third column">
+			<h3>List of books</h3>
+			<ul id="general_list">
+				<li id="book_1">
+					<span>Book 1	</span>
+					<button>Buy</button>
+				</li>
+				<li id="book_2">
+					<span>Book 2 	</span>
+					<button>Buy</button>
+				</li>
+				<li id="book_3">
+					<span>Book 3	</span>
+					<button>Buy</button>
+				</li>
+			</ul>
+		</div>
+		<div class="one-third column">
+			<h3>Books You're Buying</h3>
+			<ul id="buy_list" class="square">
+				<li id="book_4">
+					<span>Book 4</span>
+					<button>Delete</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+<script>
+
+var generalList = document.getElementById('general_list');
+var buyList = document.getElementById('buy_list');
+
+var buyBookButtons = generalList.getElementsByTagName('button');
+var deleteBookButtons = buyList.getElementsByTagName('button');
+
+for(var ii=0; ii < buyBookButtons.length ; ii++) {
+	buyBookButtons[ii].addEventListener("click", buyBook);
+}
+
+for(var ii=0; ii < deleteBookButtons.length ; ii++) {
+	deleteBookButtons[ii].addEventListener("click", deleteBook);
+}
+
+function buyBook (e) {
+
+	console.log("Buying.");
+
+	var button = e.target || e.srcElement;
+	var listItem = button.parentNode;
+	var bookId = listItem.id;
+
+	/* hey server, {bookId} is the ID of the book. Please add it to the buy list. */
+
+	generalList.removeChild(listItem);
+	buyList.appendChild(listItem);
+	button.childNodes[0].nodeValue = "Delete";
+	button.addEventListener("click", deleteBook);
+    button.removeEventListener("click", buyBook, false);
+
+}
+
+function deleteBook (e) {
+
+	console.log("Buying.");
+
+	var button = e.target || e.srcElement;
+	var listItem = button.parentNode;
+	var bookId = listItem.id;
+
+	/* hey server, {bookId} is the no longer on the buy list */
+
+	buyList.removeChild(listItem);
+	generalList.appendChild(listItem);
+	button.childNodes[0].nodeValue = "Buy";
+	button.addEventListener("click", buyBook);
+	button.removeEventListener("click", deleteBook, false);
+
+}
+
+</script>
+</html>
